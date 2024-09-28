@@ -10,7 +10,7 @@ interface ForecastApi {
     @GET("forecast")
     suspend fun getForecast(
         @Query("appid") clientId: String = Constants.API_KEY,
-        @Query("lat") lat: String,
-        @Query("lon") lon: String
+        @Query("lat") lat: Double,
+        @Query("lon") lon: Double
     ): ForecastResponse
 }
