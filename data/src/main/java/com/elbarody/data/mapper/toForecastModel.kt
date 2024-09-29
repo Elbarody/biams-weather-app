@@ -1,5 +1,8 @@
 package com.elbarody.data.mapper
 
+import com.elbarody.data.mapper.WeatherFormatter.formatTimeWithoutSeconds
+import com.elbarody.data.mapper.WeatherFormatter.toFormattedCelsius
+import com.elbarody.data.mapper.WeatherFormatter.toFormattedTime
 import com.elbarody.data.remote.model.*
 import com.elbarody.domain.model.CityData
 import com.elbarody.domain.model.ForecastDailyItem
@@ -9,15 +12,25 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.round
 
-fun ForecastResponse.toForecastModel(): ForecastModel {
-    val dateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+private val dateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
 
+// Responsible for formatting data
+object WeatherFormatter {
+    fun String.formatTimeWithoutSeconds(): String = this.substring(0, 5)
+
+    fun Double.toFormattedCelsius(): String = "${round(this - 273.15).toInt()}°C"
+
+    fun Int.toFormattedTime(): String = dateFormat.format(Date(this.toLong() * 1000))
+
+}
+
+fun ForecastResponse.toForecastModel(): ForecastModel {
     return ForecastModel(
         cityData = CityData(
             cityName = city.cityName,
             countryName = Locale("", city.countryCode).displayCountry,
-            sunrise = city.sunrise.toFormattedTime(dateFormat),
-            sunset = city.sunset.toFormattedTime(dateFormat)
+            sunrise = city.sunrise.toFormattedTime(),
+            sunset = city.sunset.toFormattedTime()
         ),
         forecastDailyList = weatherDetailsList.groupByDate().map { (date, weatherDetails) ->
             ForecastDailyItem(
@@ -31,13 +44,12 @@ fun ForecastResponse.toForecastModel(): ForecastModel {
 }
 
 // Helper functions and extensions
-
 private fun List<WeatherDetailsItem>.minOfTemp() = minOf { it.mainTempData.tempMin }
 private fun List<WeatherDetailsItem>.maxOfTemp() = maxOf { it.mainTempData.tempMax }
 
 private fun List<WeatherDetailsItem>.toHourlyForecasts() = map { detail ->
     ForecastHourItem(
-        time = detail.dateTime.substringAfter(" "),
+        time = detail.dateTime.substringAfter(" ").formatTimeWithoutSeconds(),
         temp = detail.mainTempData.temp.toFormattedCelsius(),
         condition = detail.weatherCondition.firstOrNull()?.mainConditionDescription.orEmpty(),
         icon = detail.weatherCondition.firstOrNull()?.iconWithUrl.orEmpty()
@@ -46,12 +58,3 @@ private fun List<WeatherDetailsItem>.toHourlyForecasts() = map { detail ->
 
 private fun List<WeatherDetailsItem>.groupByDate() = groupBy { it.dateTime.substringBefore(" ") }
 
-private fun Int.toFormattedTime(format: SimpleDateFormat) = format.format(Date(this.toLong() * 1000))
-
-private fun Double.toCelsius() = this - 273.15
-
-private fun Double.toFormattedCelsius() = "${roundToNearestInt(this.toCelsius())}°C"
-
-fun roundToNearestInt(value: Double): Int {
-    return round(value).toInt()
-}
