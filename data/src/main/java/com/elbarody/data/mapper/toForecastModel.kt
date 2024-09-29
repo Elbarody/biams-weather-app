@@ -1,6 +1,7 @@
 package com.elbarody.data.mapper
 
 import com.elbarody.data.remote.model.*
+import com.elbarody.domain.model.CityData
 import com.elbarody.domain.model.ForecastDailyItem
 import com.elbarody.domain.model.ForecastHourItem
 import com.elbarody.domain.model.ForecastModel
@@ -12,10 +13,12 @@ fun ForecastResponse.toForecastModel(): ForecastModel {
     val dateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
 
     return ForecastModel(
-        countryName = Locale("", city.countryCode).displayCountry,
-        cityName = city.cityName,
-        sunrise = city.sunrise.toFormattedTime(dateFormat),
-        sunset = city.sunset.toFormattedTime(dateFormat),
+        cityData = CityData(
+            cityName = city.cityName,
+            countryName = Locale("", city.countryCode).displayCountry,
+            sunrise = city.sunrise.toFormattedTime(dateFormat),
+            sunset = city.sunset.toFormattedTime(dateFormat)
+        ),
         forecastDailyList = weatherDetailsList.groupByDate().map { (date, weatherDetails) ->
             ForecastDailyItem(
                 date = date,
