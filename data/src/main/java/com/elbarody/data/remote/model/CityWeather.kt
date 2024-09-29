@@ -3,7 +3,7 @@ package com.elbarody.data.remote.model
 
 import com.google.gson.annotations.SerializedName
 
-data class City(
+data class CityWeather(
     @SerializedName("coord") val coord: Coord,
     @SerializedName("country") val countryCode: String,
     @SerializedName("id") val id: Int,

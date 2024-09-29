@@ -1,11 +1,11 @@
 package com.elbarody.domain.model
 
 data class ForecastModel(
-    val cityData: CityData,
+    val cityWeatherData: CityWeatherData,
     val forecastDailyList: List<ForecastDailyItem>
 )
 
-data class CityData(
+data class CityWeatherData(
     val countryName: String,
     val cityName: String,
     val sunrise: String,

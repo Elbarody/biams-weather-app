@@ -4,7 +4,7 @@ import com.elbarody.data.mapper.WeatherFormatter.formatTimeWithoutSeconds
 import com.elbarody.data.mapper.WeatherFormatter.toFormattedCelsius
 import com.elbarody.data.mapper.WeatherFormatter.toFormattedTime
 import com.elbarody.data.remote.model.*
-import com.elbarody.domain.model.CityData
+import com.elbarody.domain.model.CityWeatherData
 import com.elbarody.domain.model.ForecastDailyItem
 import com.elbarody.domain.model.ForecastHourItem
 import com.elbarody.domain.model.ForecastModel
@@ -26,11 +26,11 @@ object WeatherFormatter {
 
 fun ForecastResponse.toForecastModel(): ForecastModel {
     return ForecastModel(
-        cityData = CityData(
-            cityName = city.cityName,
-            countryName = Locale("", city.countryCode).displayCountry,
-            sunrise = city.sunrise.toFormattedTime(),
-            sunset = city.sunset.toFormattedTime()
+        cityWeatherData = CityWeatherData(
+            cityName = cityWeather.cityName,
+            countryName = Locale("", cityWeather.countryCode).displayCountry,
+            sunrise = cityWeather.sunrise.toFormattedTime(),
+            sunset = cityWeather.sunset.toFormattedTime()
         ),
         forecastDailyList = weatherDetailsList.groupByDate().map { (date, weatherDetails) ->
             ForecastDailyItem(

@@ -60,7 +60,7 @@ fun ForecastWeatherScreen(viewModel: ForecastViewModel = hiltViewModel()) {
                     .padding(it)
             ) {
                 forecastModel?.let { forecastModel ->
-                    GeneralCityLayout(cityData = forecastModel.cityData)
+                    GeneralCityLayout(cityWeatherData = forecastModel.cityWeatherData)
                 }
                 Column(modifier = Modifier.fillMaxWidth().wrapContentHeight().verticalScroll(rememberScrollState())) {
                     forecastDailyList.forEach { forecastDailyItem ->

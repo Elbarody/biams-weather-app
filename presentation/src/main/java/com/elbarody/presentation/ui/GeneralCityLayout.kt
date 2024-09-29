@@ -14,11 +14,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.elbarody.base.compose.annotatedString
 import com.elbarody.base.utils.Dimens
-import com.elbarody.domain.model.CityData
+import com.elbarody.domain.model.CityWeatherData
 import com.elbarody.presentation.R
 
 @Composable
-fun GeneralCityLayout(cityData: CityData) {
+fun GeneralCityLayout(cityWeatherData: CityWeatherData) {
     Column(
         modifier = Modifier
             .padding(top = Dimens.threeLevelPadding)
@@ -36,14 +36,14 @@ fun GeneralCityLayout(cityData: CityData) {
     ) {
         // Country and City Row
         WeatherRowItem(
-            annotatedString(stringResource(R.string.country_name), cityData.countryName),
-            annotatedString(stringResource(R.string.city_name), cityData.cityName)
+            annotatedString(stringResource(R.string.country_name), cityWeatherData.countryName),
+            annotatedString(stringResource(R.string.city_name), cityWeatherData.cityName)
         )
 
         // Sunrise and Sunset Row
         WeatherRowItem(
-            annotatedString(stringResource(R.string.sunrise), cityData.sunrise),
-            annotatedString(stringResource(R.string.sunset), cityData.sunset)
+            annotatedString(stringResource(R.string.sunrise), cityWeatherData.sunrise),
+            annotatedString(stringResource(R.string.sunset), cityWeatherData.sunset)
         )
     }
 }
