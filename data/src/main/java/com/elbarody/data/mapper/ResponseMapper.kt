@@ -1,6 +1,6 @@
 package com.elbarody.data.mapper
 
-import com.elbarody.domin.helper.Response
+import com.elbarody.domain.helper.Response
 
 
 fun <I: Any, O : Any> Response<I>.mapResponse(mapper: (I) -> O): Response<O> {

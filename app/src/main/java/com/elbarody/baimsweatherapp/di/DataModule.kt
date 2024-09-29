@@ -3,7 +3,7 @@ package com.elbarody.baimsweatherapp.di
 import com.elbarody.data.remote.datasource.ForecastDataSource
 import com.elbarody.data.remote.datasource.IForecastDataSource
 import com.elbarody.data.repository.ForecastRepository
-import com.elbarody.domin.repository.IForecastRepository
+import com.elbarody.domain.repository.IForecastRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

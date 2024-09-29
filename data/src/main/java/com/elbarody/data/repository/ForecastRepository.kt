@@ -3,7 +3,7 @@ package com.elbarody.data.repository
 import com.elbarody.data.mapper.mapResponse
 import com.elbarody.data.mapper.toForecastModel
 import com.elbarody.data.remote.datasource.ForecastDataSource
-import com.elbarody.domin.repository.IForecastRepository
+import com.elbarody.domain.repository.IForecastRepository
 import javax.inject.Inject
 
 class ForecastRepository @Inject constructor(

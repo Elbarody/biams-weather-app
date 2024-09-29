@@ -1,9 +1,9 @@
 package com.elbarody.data.mapper
 
 import com.elbarody.data.remote.model.*
-import com.elbarody.domin.model.ForecastDailyItem
-import com.elbarody.domin.model.ForecastHourItem
-import com.elbarody.domin.model.ForecastModel
+import com.elbarody.domain.model.ForecastDailyItem
+import com.elbarody.domain.model.ForecastHourItem
+import com.elbarody.domain.model.ForecastModel
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.round

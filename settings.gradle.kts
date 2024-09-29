@@ -23,4 +23,5 @@ rootProject.name = "Baims weather app"
 include(":app")
 include(":base")
 include(":data")
-include(":domin")
+include(":domain")
+include(":presentation")

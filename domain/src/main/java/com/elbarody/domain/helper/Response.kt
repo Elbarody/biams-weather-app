@@ -1,4 +1,4 @@
-package com.elbarody.domin.helper
+package com.elbarody.domain.helper
 
 sealed interface Response<out T> {
     class Success<T>(val data: T): Response<T>

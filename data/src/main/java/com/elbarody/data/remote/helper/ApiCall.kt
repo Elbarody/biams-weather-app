@@ -1,6 +1,6 @@
 package com.elbarody.data.remote.helper
 
-import com.elbarody.domin.helper.Response
+import com.elbarody.domain.helper.Response
 import java.io.IOException
 
 /**

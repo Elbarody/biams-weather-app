@@ -1,4 +1,4 @@
-package com.elbarody.domin.model
+package com.elbarody.domain.model
 
 data class ForecastModel(
     val countryName: String,

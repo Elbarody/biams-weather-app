@@ -9,7 +9,7 @@ java {
 }
 
 dependencies {
-    implementation(project(":domin"))
+    implementation(project(":domain"))
 
     // Retrofit
     implementation(libs.retrofit)
