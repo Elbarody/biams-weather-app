@@ -40,7 +40,7 @@ private fun List<WeatherDetailsItem>.toHourlyForecasts() = map { detail ->
         time = detail.dateTime.substringAfter(" "),
         temp = detail.mainTempData.temp.toFormattedCelsius(),
         condition = detail.weatherCondition.firstOrNull()?.mainConditionDescription.orEmpty(),
-        icon = detail.weatherCondition.firstOrNull()?.icon.orEmpty()
+        icon = detail.weatherCondition.firstOrNull()?.iconWithUrl.orEmpty()
     )
 }
 

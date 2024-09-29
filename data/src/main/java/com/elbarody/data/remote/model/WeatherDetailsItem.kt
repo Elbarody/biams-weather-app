@@ -1,6 +1,7 @@
 package com.elbarody.data.remote.model
 
 
+import com.elbarody.data.remote.Constants.getIconUrl
 import com.google.gson.annotations.SerializedName
 
 data class WeatherDetailsItem(
@@ -21,4 +22,7 @@ data class WeatherCondition(
     @SerializedName("icon") val icon: String,
     @SerializedName("id") val id: Int,
     @SerializedName("main") val mainCondition: String
-)
+){
+    val iconWithUrl: String
+        get() = getIconUrl(icon)
+}
