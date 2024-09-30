@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="country_name">"Country Name : "</string>
-    <string name="city_name">"City Name : "</string>
+    <string name="country_name">"Country : "</string>
+    <string name="city_name">"City : "</string>
     <string name="condition">"Condition : "</string>
     <string name="max_temp">"Max Temp: "</string>
     <string name="min_temp">"Min Temp: "</string>
@@ -10,4 +10,5 @@
     <string name="time">"Time : "</string>
     <string name="day_of">"Day of : "</string>
     <string name="temperature">"Temperature : "</string>
+    <string name="select_city_please">Select city, please</string>
 </resources>

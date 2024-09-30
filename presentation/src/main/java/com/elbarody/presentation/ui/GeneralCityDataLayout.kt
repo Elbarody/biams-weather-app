@@ -18,7 +18,7 @@ import com.elbarody.domain.model.CityWeatherData
 import com.elbarody.presentation.R
 
 @Composable
-fun GeneralCityLayout(cityWeatherData: CityWeatherData) {
+fun GeneralCityDataLayout(cityWeatherData: CityWeatherData) {
     Column(
         modifier = Modifier
             .padding(top = Dimens.threeLevelPadding)

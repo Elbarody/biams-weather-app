@@ -19,22 +19,17 @@ class ForecastViewModel @Inject constructor(
 
     override fun createInitialState() = ForecastContract.State(
         forecastState = ForecastContract.ForecastUiState.Idle,
-        cities = CitiesListDataModel(emptyList())
     )
 
     override fun handleEvent(event: ForecastContract.Event) {
         when (event) {
             is ForecastContract.Event.OnCityClicked -> {
-                updateCityName(event.cityName)
                 getForecast(event.lat, event.lon)
             }
             ForecastContract.Event.OnStart -> getCities()
         }
     }
 
-    private fun updateCityName(cityName: String) {
-        setState { copy(cityName = cityName) }
-    }
 
     private fun getForecast(lat: Double, lon: Double) {
         viewModelScope.launch {
@@ -54,12 +49,19 @@ class ForecastViewModel @Inject constructor(
         }
     }
 
-    private suspend fun <T> executeRequest(request: suspend () -> Response<T>, onSuccess: (Response<T>) -> Unit) {
+    private suspend fun <T> executeRequest(
+        request: suspend () -> Response<T>,
+        onSuccess: (Response<T>) -> Unit
+    ) {
         setState { copy(forecastState = ForecastContract.ForecastUiState.Loading(true)) }
+
         kotlin.runCatching {
             request()
-        }.onSuccess(onSuccess)
-            .onFailure { setErrorState(it.message ?: "Error occurred, please try again") }
+        }.onSuccess { response ->
+            onSuccess(response)
+        }.onFailure { exception ->
+            setErrorState(exception.message ?: "Error occurred, please try again")
+        }
     }
 
     private fun handleForecastResponse(response: Response<ForecastModel>) {
@@ -67,13 +69,15 @@ class ForecastViewModel @Inject constructor(
             is Response.Success -> {
                 setState { copy(forecastState = ForecastContract.ForecastUiState.DisplayForecast(response.data)) }
             }
-            is Response.Error -> setErrorState(response.errorMessage)
+            is Response.Error -> {
+                setErrorState(response.errorMessage)
+            }
         }
     }
 
     private fun handleCitiesResponse(response: Response<CitiesListDataModel>) {
         when (response) {
-            is Response.Success -> setState { copy(cities = response.data) }
+            is Response.Success -> setState { copy(forecastState = ForecastContract.ForecastUiState.DisplayCities(response.data)) }
             is Response.Error -> setErrorState(response.errorMessage)
         }
     }

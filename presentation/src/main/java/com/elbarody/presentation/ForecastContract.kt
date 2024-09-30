@@ -14,14 +14,14 @@ class ForecastContract {
 
     data class State(
         val forecastState: ForecastUiState = ForecastUiState.Idle,
-        val cities: CitiesListDataModel,
-        val cityName: String = "",
+        val cities: CitiesListDataModel? = null,
     ) : UiState
 
     sealed class ForecastUiState {
         object Idle : ForecastUiState()
         data class Loading(val isLoading: Boolean) : ForecastUiState()
         data class DisplayForecast(val forecast: ForecastModel) : ForecastUiState()
+        data class DisplayCities(val cities: CitiesListDataModel) : ForecastUiState()
         data class DisplayError(val errorMessage: String? = null) : ForecastUiState()
     }
 }
