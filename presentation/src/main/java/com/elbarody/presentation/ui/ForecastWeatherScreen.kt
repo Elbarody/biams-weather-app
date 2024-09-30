@@ -1,9 +1,6 @@
 package com.elbarody.presentation.ui
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
@@ -23,56 +20,56 @@ import com.elbarody.presentation.ForecastViewModel
 fun ForecastWeatherScreen(viewModel: ForecastViewModel = hiltViewModel()) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    val isDataLoaded = uiState.forecastState is ForecastContract.ForecastUiState.DisplayForecast
-
-
-    when (val state = uiState.forecastState) {
-        is ForecastContract.ForecastUiState.Loading -> {
-            SmallCenteredCircularProgressIndicator()
+    AppScaffold(
+        modifier = Modifier
+            .padding(Dimens.fourLevelPadding)
+            .fillMaxWidth(),
+        topBar = {
+            uiState.cities
+            // Add your top bar implementation here
         }
-
-        is ForecastContract.ForecastUiState.DisplayError -> ShowUserMessage(
-            message = state.errorMessage ?: ""
-        )
-
-        is ForecastContract.ForecastUiState.DisplayForecast -> {
-        }
-
-        is ForecastContract.ForecastUiState.Idle -> {
-            viewModel.handleEvent(ForecastContract.Event.onCityClicked("Cairo",0.0,0.0))
-        }
-
-    }
-
-    AppScaffold(modifier = Modifier
-        .padding(Dimens.fourLevelPadding)
-        .fillMaxWidth(), topBar = {
-
-    }) {
-        if (isDataLoaded) {
-            val forecastModel =
-                (uiState.forecastState as? ForecastContract.ForecastUiState.DisplayForecast)?.forecast
-            val forecastDailyList = forecastModel?.forecastDailyList ?: emptyList()
-
-            Column(
-                Modifier
-                    .fillMaxWidth()
-                    .padding(it)
-            ) {
-                forecastModel?.let { forecastModel ->
-                    GeneralCityLayout(cityWeatherData = forecastModel.cityWeatherData)
-                }
-                Column(modifier = Modifier.fillMaxWidth().wrapContentHeight().verticalScroll(rememberScrollState())) {
-                    forecastDailyList.forEach { forecastDailyItem ->
-                        DailyForecastItem(forecastDailyItem = forecastDailyItem)
-                    }
-                }
-
+    ) {paddingValues ->
+        when (val state = uiState.forecastState) {
+            is ForecastContract.ForecastUiState.Loading -> {
+                SmallCenteredCircularProgressIndicator()
             }
+
+            is ForecastContract.ForecastUiState.DisplayError -> {
+                ShowUserMessage(message = state.errorMessage ?: "")
+            }
+
+            is ForecastContract.ForecastUiState.DisplayForecast -> {
+                DisplayForecast(uiState,paddingValues)
+            }
+
+            is ForecastContract.ForecastUiState.Idle -> {
+                viewModel.handleEvent(ForecastContract.Event.OnCityClicked("Cairo", 0.0, 0.0))
+            }
+
         }
     }
 }
 
+@Composable
+private fun DisplayForecast(uiState: ForecastContract.State, paddingValues: PaddingValues) {
+    val forecastModel =
+        (uiState.forecastState as? ForecastContract.ForecastUiState.DisplayForecast)?.forecast
+    val forecastDailyList = forecastModel?.forecastDailyList ?: emptyList()
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(paddingValues = paddingValues)
+            .verticalScroll(rememberScrollState())
+    ) {
+        forecastModel?.let { model ->
+            GeneralCityLayout(cityWeatherData = model.cityWeatherData)
+        }
+        forecastDailyList.forEach { forecastDailyItem ->
+            DailyForecastItem(forecastDailyItem = forecastDailyItem)
+        }
+    }
+}
 
 @Preview
 @Composable
