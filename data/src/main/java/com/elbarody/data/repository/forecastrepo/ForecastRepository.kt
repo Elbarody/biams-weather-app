@@ -1,9 +1,9 @@
-package com.elbarody.data.repository
+package com.elbarody.data.repository.forecastrepo
 
 import com.elbarody.data.mapper.mapResponse
 import com.elbarody.data.mapper.toForecastModel
-import com.elbarody.data.remote.datasource.ForecastDataSource
-import com.elbarody.domain.repository.IForecastRepository
+import com.elbarody.data.remote.datasource.forecastremotedatasource.ForecastDataSource
+import com.elbarody.domain.repository.forecastrepo.IForecastRepository
 import javax.inject.Inject
 
 class ForecastRepository @Inject constructor(

@@ -1,6 +1,6 @@
-package com.elbarody.domain.usecases
+package com.elbarody.domain.usecases.forecastusecase
 
-import com.elbarody.domain.repository.IForecastRepository
+import com.elbarody.domain.repository.forecastrepo.IForecastRepository
 import javax.inject.Inject
 
 class GetForecastUseCase @Inject constructor(private val repository: IForecastRepository) {

@@ -1,4 +1,4 @@
-package com.elbarody.data.remote.datasource
+package com.elbarody.data.remote.datasource.forecastremotedatasource
 
 import com.elbarody.data.remote.api.ForecastApi
 import com.elbarody.data.remote.helper.apiCall

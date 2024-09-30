@@ -1,4 +1,4 @@
-package com.elbarody.domain.repository
+package com.elbarody.domain.repository.forecastrepo
 
 import com.elbarody.domain.helper.Response
 import com.elbarody.domain.model.ForecastModel
