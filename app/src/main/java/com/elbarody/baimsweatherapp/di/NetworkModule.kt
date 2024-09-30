@@ -1,12 +1,12 @@
 package com.elbarody.baimsweatherapp.di
 
-import android.content.Context
 import com.elbarody.data.remote.Constants
+import com.elbarody.data.remote.Constants.CITIES_BASE_URL
+import com.elbarody.data.remote.api.CitiesApi
 import com.elbarody.data.remote.api.ForecastApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -21,9 +21,7 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(
-        @ApplicationContext context: Context
-    ): OkHttpClient {
+    fun provideOkHttpClient(): OkHttpClient {
         val httpLoggingInterceptor = HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         }
@@ -33,14 +31,22 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
-        return Retrofit.Builder().baseUrl(Constants.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create()).client(okHttpClient).build()
+    fun provideCitiesApiService(okHttpClient: OkHttpClient): CitiesApi {
+        return Retrofit.Builder()
+            .baseUrl(CITIES_BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
+            .build()
+            .create(CitiesApi::class.java)
     }
 
     @Provides
-    @Singleton
-    fun providesApiService(retrofit: Retrofit): ForecastApi {
-        return retrofit.create(ForecastApi::class.java)
+    fun provideWeatherApiService(okHttpClient: OkHttpClient): ForecastApi {
+        return Retrofit.Builder()
+            .baseUrl(Constants.WEATHER_BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
+            .build()
+            .create(ForecastApi::class.java)
     }
 }
