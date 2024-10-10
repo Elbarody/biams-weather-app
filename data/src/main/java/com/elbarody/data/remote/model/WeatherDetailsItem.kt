@@ -11,7 +11,6 @@ data class WeatherDetailsItem(
 )
 
 data class MainTempData(
-    @SerializedName("feels_like") val feelsLike: Double,
     @SerializedName("temp") val temp: Double,
     @SerializedName("temp_max") val tempMax: Double,
     @SerializedName("temp_min") val tempMin: Double
