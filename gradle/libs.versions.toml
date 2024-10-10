@@ -29,6 +29,7 @@ mockitoInline = "4.6.1"
 mockitoKotlin = "2.2.0"
 kotlinxCoroutinesTest = "1.7.3"
 compose-coil ="2.0.0-rc01"
+coreTesting = "2.0.0"
 
 
 [libraries]
@@ -67,7 +68,8 @@ kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-t
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockitoCore" }
 mockito-inline = { module = "org.mockito:mockito-inline", version.ref = "mockitoInline" }
 mockito-kotlin = { module = "com.nhaarman.mockitokotlin2:mockito-kotlin", version.ref = "mockitoKotlin" }
-
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesTest" }
+kotlinx-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "coreTesting" }
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
